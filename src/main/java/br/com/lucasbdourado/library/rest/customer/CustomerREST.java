@@ -1,4 +1,4 @@
-package br.com.lucasbdourado.library.rest;
+package br.com.lucasbdourado.library.rest.customer;
 
 import br.com.lucasbdourado.library.entity.customer.Customer;
 import br.com.lucasbdourado.library.exception.NotFoundException;

@@ -1,10 +1,10 @@
 package br.com.lucasbdourado.library.rest.authentication;
 
-import br.com.lucasbdourado.library.dto.authentication.AuthenticationDTO;
+import br.com.lucasbdourado.library.dto.authentication.AuthenticationRequestDto;
+import br.com.lucasbdourado.library.dto.authentication.AuthenticationResponseDto;
 import br.com.lucasbdourado.library.entity.user.User;
 import br.com.lucasbdourado.library.exception.UnauthorizedException;
-import br.com.lucasbdourado.library.service.jwt.JWTService;
-import br.com.lucasbdourado.library.service.user.IUserService;
+import br.com.lucasbdourado.library.service.authentication.IAuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,34 +22,30 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationREST
 {
 	@Autowired
-	private AuthenticationManager authenticationManager;
+	private final IAuthenticationService service;
 
 	@Autowired
-	private JWTService jwtService;
+	private final AuthenticationManager authenticationManager;
 
-	@Autowired
-	private final IUserService service;
-
-	public AuthenticationREST(IUserService service)
+	public AuthenticationREST(IAuthenticationService service,
+		AuthenticationManager authenticationManager)
 	{
 		this.service = service;
+		this.authenticationManager = authenticationManager;
 	}
 
 	@PostMapping("/login")
 	@Operation(summary = "Logar com um usuário")
-	public ResponseEntity<Object> login(@RequestBody AuthenticationDTO authenticationDTO)
+	public ResponseEntity<Object> login(@RequestBody AuthenticationRequestDto authenticationRequestDto)
 	{
 		try
 		{
 			Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(authenticationDTO.email(), authenticationDTO.password())
-			);
+				new UsernamePasswordAuthenticationToken(authenticationRequestDto.email(),
+					authenticationRequestDto.password()));
 
-			User user = (User) authentication.getPrincipal();
-
-			String token = jwtService.generateToken(user.getEmail());
-
-			return ResponseEntity.status(HttpStatus.OK).body(token);
+			return ResponseEntity.status(HttpStatus.OK)
+				.body(new AuthenticationResponseDto(service.login(authentication)));
 		}
 		catch (UnauthorizedException e)
 		{

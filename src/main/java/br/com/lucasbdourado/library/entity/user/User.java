@@ -1,12 +1,15 @@
 package br.com.lucasbdourado.library.entity.user;
 
 import br.com.lucasbdourado.library.entity.customer.Customer;
+import br.com.lucasbdourado.library.entity.role.UserRole;
 import jakarta.persistence.*;
-import java.util.GregorianCalendar;
-import java.util.UUID;
+import java.util.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-public class User
+public class User implements UserDetails
 {
 	@Id
 	@GeneratedValue
@@ -21,6 +24,8 @@ public class User
 	private String password;
 
 	private boolean active = true;
+
+	private UserRole role = UserRole.USER_ROLE;
 
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	private Customer customer;
@@ -119,5 +124,40 @@ public class User
 	public void setUpdateDate(GregorianCalendar updateDate)
 	{
 		this.updateDate = updateDate;
+	}
+
+	@Override
+	public boolean isAccountNonExpired()
+	{
+		return UserDetails.super.isAccountNonExpired();
+	}
+
+	@Override
+	public boolean isAccountNonLocked()
+	{
+		return UserDetails.super.isAccountNonLocked();
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired()
+	{
+		return UserDetails.super.isCredentialsNonExpired();
+	}
+
+	@Override
+	public boolean isEnabled()
+	{
+		return UserDetails.super.isEnabled();
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities()
+	{
+		if (Objects.requireNonNull(role) == UserRole.ADMIN_ROLE)
+		{
+			return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"),
+				new SimpleGrantedAuthority("ROLE_USER"));
+		}
+		return List.of(new SimpleGrantedAuthority("ROLE_USER"));
 	}
 }

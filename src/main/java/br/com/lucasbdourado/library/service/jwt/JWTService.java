@@ -2,7 +2,6 @@ package br.com.lucasbdourado.library.service.jwt;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
-import java.security.Key;
 import java.util.Date;
 import java.util.function.Function;
 import javax.crypto.SecretKey;

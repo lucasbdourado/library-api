@@ -6,6 +6,7 @@ import br.com.lucasbdourado.library.exception.UnauthorizedException;
 import br.com.lucasbdourado.library.exception.UniqueFieldException;
 import br.com.lucasbdourado.library.repository.user.UserRepository;
 import br.com.lucasbdourado.library.service.user.IUserService;
+import java.util.GregorianCalendar;
 import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,9 @@ public class UserService implements IUserService
 			throw new UnauthorizedException("Não existe uma conta associada ao e-mail informado.");
 		}
 
-		return user;
+		user.setLastLoginDate(new GregorianCalendar());
+
+		return repository.save(user);
 	}
 
 	@Override
@@ -44,11 +47,9 @@ public class UserService implements IUserService
 			throw new UniqueFieldException("Já existe uma conta associada ao e-mail informado.");
 		}
 
-		User newUser = new User();
+		user.setCreationDate(new GregorianCalendar());
+		user.setUpdateDate(new GregorianCalendar());
 
-		newUser.setEmail(user.getEmail());
-		newUser.setPassword(user.getPassword());
-
-		return repository.save(newUser);
+		return repository.save(user);
 	}
 }

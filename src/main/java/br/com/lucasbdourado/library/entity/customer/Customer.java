@@ -1,6 +1,7 @@
 package br.com.lucasbdourado.library.entity.customer;
 
 import br.com.lucasbdourado.library.entity.address.Address;
+import br.com.lucasbdourado.library.entity.user.User;
 import jakarta.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
@@ -19,19 +20,21 @@ public class Customer implements Serializable
 
 	private String name;
 
-	@Column(unique = true)
-	private String email;
-
 	private String phone;
 
 	private Gender gender;
 
 	private Indentity indentity;
 
+	@Column(unique = true)
 	private String identityNumber;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private Address address;
+
+	@OneToOne
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	private User user;
 
 	private GregorianCalendar creationDate;
 
@@ -55,16 +58,6 @@ public class Customer implements Serializable
 	public void setName(String name)
 	{
 		this.name = name;
-	}
-
-	public String getEmail()
-	{
-		return email;
-	}
-
-	public void setEmail(String email)
-	{
-		this.email = email;
 	}
 
 	public String getPhone()
@@ -115,6 +108,16 @@ public class Customer implements Serializable
 	public void setAddress(Address address)
 	{
 		this.address = address;
+	}
+
+	public User getUser()
+	{
+		return user;
+	}
+
+	public void setUser(User user)
+	{
+		this.user = user;
 	}
 
 	public GregorianCalendar getCreationDate()

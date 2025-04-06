@@ -3,6 +3,8 @@ package br.com.lucasbdourado.library.rest;
 import br.com.lucasbdourado.library.entity.customer.Customer;
 import br.com.lucasbdourado.library.exception.NotFoundException;
 import br.com.lucasbdourado.library.service.customer.ICustomerService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/customer")
+@Tag(name = "Clientes", description = "Operações relacionadas aos clientes")
 public class CustomerREST
 {
 
@@ -26,6 +29,7 @@ public class CustomerREST
 	}
 
 	@GetMapping({"/", ""})
+	@Operation(summary = "Listar todos os clientes", description = "Retorna uma lista com todos os clientes.")
 	public ResponseEntity<Object> getCustomerList()
 	{
 		try
@@ -42,6 +46,7 @@ public class CustomerREST
 	}
 
 	@GetMapping("/{id}")
+	@Operation(summary = "Buscar um cliente pelo ID", description = "Retorna o cliente pelo Id, caso não encontre nenhum, retorna que não foi encontrado.")
 	public ResponseEntity<Object> getById(@PathVariable UUID id)
 	{
 		try
@@ -63,6 +68,7 @@ public class CustomerREST
 	}
 
 	@PostMapping({"/", ""})
+	@Operation(summary = "Criar um cliente")
 	public ResponseEntity<Object> create(@RequestBody Customer customerPayload)
 	{
 		try
@@ -78,6 +84,7 @@ public class CustomerREST
 	}
 
 	@PutMapping("/{id}")
+	@Operation(summary = "Atualizar um cliente")
 	public ResponseEntity<Object> update(@PathVariable UUID id, @RequestBody Customer customerPayload)
 	{
 		try
@@ -98,6 +105,7 @@ public class CustomerREST
 	}
 
 	@DeleteMapping("/{id}")
+	@Operation(summary = "Deletar um cliente pelo Id")
 	public ResponseEntity<Object> delete(@PathVariable UUID id)
 	{
 		try

@@ -1,10 +1,9 @@
-package br.com.lucasbdourado.library.rest.customer;
+package br.com.lucasbdourado.library.rest.book;
 
-import br.com.lucasbdourado.library.entity.customer.Customer;
+import br.com.lucasbdourado.library.entity.book.Book;
 import br.com.lucasbdourado.library.exception.NotFoundException;
-import br.com.lucasbdourado.library.service.customer.ICustomerService;
+import br.com.lucasbdourado.library.service.book.IBookService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,30 +12,28 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/customer")
-@Tag(name = "Clientes", description = "Operações relacionadas aos clientes")
-public class CustomerREST
+@RequestMapping("/books")
+public class BookREST
 {
-
 	private static final String NOT_FOUND = "Not Found";
 
 	@Autowired
-	private final ICustomerService service;
+	private final IBookService service;
 
-	public CustomerREST(ICustomerService service)
+	public BookREST(IBookService service)
 	{
 		this.service = service;
 	}
 
 	@GetMapping({"/", ""})
-	@Operation(summary = "Listar todos os clientes", description = "Retorna uma lista com todos os clientes.")
-	public ResponseEntity<Object> getCustomerList()
+	@Operation(summary = "Listar todos os livros", description = "Retorna uma lista com todos os livros.")
+	public ResponseEntity<Object> getBookList()
 	{
 		try
 		{
-			List<Customer> customerList = service.findAll();
+			List<Book> entityList = service.findAll();
 
-			return ResponseEntity.ok().body(customerList);
+			return ResponseEntity.ok().body(entityList);
 		}
 		catch (Exception e)
 		{
@@ -46,14 +43,14 @@ public class CustomerREST
 	}
 
 	@GetMapping("/{id}")
-	@Operation(summary = "Buscar um cliente pelo ID", description = "Retorna o cliente pelo Id, caso não encontre nenhum, retorna que não foi encontrado.")
-	public ResponseEntity<Object> getById(@PathVariable UUID id)
+	@Operation(summary = "Buscar um livro pelo ID", description = "Retorna o livro pelo Id, caso não encontre nenhum, retorna que não foi encontrado.")
+	public ResponseEntity<Object> getBookById(@PathVariable UUID id)
 	{
 		try
 		{
-			Customer customer = service.findById(id);
+			Book book = service.findById(id);
 
-			return ResponseEntity.ok().body(customer);
+			return ResponseEntity.ok().body(book);
 		}
 		catch (NotFoundException e)
 		{
@@ -68,13 +65,13 @@ public class CustomerREST
 	}
 
 	@PostMapping({"/", ""})
-	@Operation(summary = "Criar um cliente")
-	public ResponseEntity<Object> create(@RequestBody Customer customerPayload)
+	@Operation(summary = "Criar um livro")
+	public ResponseEntity<Object> create(@RequestBody Book bookPayload)
 	{
 		try
 		{
 
-			return ResponseEntity.ok().body(service.persist(customerPayload));
+			return ResponseEntity.ok().body(service.persist(bookPayload));
 		}
 		catch (Exception e)
 		{
@@ -84,13 +81,13 @@ public class CustomerREST
 	}
 
 	@PutMapping("/{id}")
-	@Operation(summary = "Atualizar um cliente")
-	public ResponseEntity<Object> update(@PathVariable UUID id, @RequestBody Customer customerPayload)
+	@Operation(summary = "Atualizar um livro")
+	public ResponseEntity<Object> update(@PathVariable UUID id, @RequestBody Book bookPayload)
 	{
 		try
 		{
 
-			return ResponseEntity.ok().body(service.update(id, customerPayload));
+			return ResponseEntity.ok().body(service.update(id, bookPayload));
 		}
 		catch (NotFoundException e)
 		{
@@ -105,7 +102,7 @@ public class CustomerREST
 	}
 
 	@DeleteMapping("/{id}")
-	@Operation(summary = "Deletar um cliente pelo Id")
+	@Operation(summary = "Deletar um livro pelo Id")
 	public ResponseEntity<Object> delete(@PathVariable UUID id)
 	{
 		try

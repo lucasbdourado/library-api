@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class User implements UserDetails
 {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 
 	@Column(nullable = false, unique = true)

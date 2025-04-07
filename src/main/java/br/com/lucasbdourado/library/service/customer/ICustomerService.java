@@ -10,9 +10,9 @@ public interface ICustomerService
 
 	Customer findById(UUID id);
 
-	Customer persist(Customer customerPayload);
+	Customer persist(Customer customer);
 
-	Customer update(UUID id, Customer customerPayload);
+	Customer update(UUID id, Customer customer);
 
 	void delete(UUID id);
 }

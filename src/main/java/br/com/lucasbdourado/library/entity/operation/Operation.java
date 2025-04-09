@@ -14,6 +14,8 @@ public class Operation
 
 	private String description;
 
+	private OperationStatus status;
+
 	@ManyToMany(mappedBy = "operationList")
 	private List<Group> groups;
 
@@ -35,6 +37,16 @@ public class Operation
 	public void setDescription(String description)
 	{
 		this.description = description;
+	}
+
+	public OperationStatus getStatus()
+	{
+		return status;
+	}
+
+	public void setStatus(OperationStatus status)
+	{
+		this.status = status;
 	}
 
 	public List<Group> getGroups()

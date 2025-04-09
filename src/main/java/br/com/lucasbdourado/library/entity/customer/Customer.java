@@ -7,9 +7,7 @@ import br.com.lucasbdourado.library.entity.user.User;
 import jakarta.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.UUID;
 
 @Entity

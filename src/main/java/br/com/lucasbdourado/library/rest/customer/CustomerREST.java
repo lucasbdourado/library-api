@@ -1,26 +1,33 @@
 package br.com.lucasbdourado.library.rest.customer;
 
+import br.com.lucasbdourado.library.dto.address.AddressResponse;
+import br.com.lucasbdourado.library.dto.city.CityResponse;
+import br.com.lucasbdourado.library.dto.customer.CustomerResponse;
+import br.com.lucasbdourado.library.dto.neighborhood.NeighborhoodResponse;
+import br.com.lucasbdourado.library.dto.state.StateResponse;
+import br.com.lucasbdourado.library.entity.address.Address;
+import br.com.lucasbdourado.library.entity.city.City;
 import br.com.lucasbdourado.library.entity.customer.Customer;
+import br.com.lucasbdourado.library.entity.neighborhood.Neighborhood;
+import br.com.lucasbdourado.library.entity.state.State;
 import br.com.lucasbdourado.library.exception.NotFoundException;
 import br.com.lucasbdourado.library.service.customer.ICustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import java.util.UUID;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/customer")
+@RequestMapping("/customers")
 @Tag(name = "Clientes", description = "Operações relacionadas aos clientes")
 public class CustomerREST
 {
 
 	private static final String NOT_FOUND = "Not Found";
 
-	@Autowired
 	private final ICustomerService service;
 
 	public CustomerREST(ICustomerService service)
@@ -73,8 +80,33 @@ public class CustomerREST
 	{
 		try
 		{
+			Customer customer = service.persist(customerPayload);
 
-			return ResponseEntity.ok().body(service.persist(customerPayload));
+			Address address = customer.getAddress();
+
+			State state = address.getState();
+
+			City city = address.getCity();
+
+			Neighborhood neighborhood = address.getNeighborhood();
+
+			StateResponse stateResponse = new StateResponse(state.getId(), state.getCode(),
+				state.getName(), state.getStateAcronym());
+
+			CityResponse cityResponse = new CityResponse(city.getId(), city.getCode(), city.getName());
+
+			NeighborhoodResponse neighborhoodResponse = new NeighborhoodResponse(neighborhood.getId(),
+				neighborhood.getCode(), neighborhood.getName(), neighborhood.getStateAcronym());
+
+			AddressResponse addressResponse = new AddressResponse(address.getId(), address.getCountry(),
+				stateResponse, cityResponse, neighborhoodResponse, address.getZip(),
+				address.getStreet(), address.getNumber());
+
+			CustomerResponse customerResponse = new CustomerResponse(customer.getId(), customer.getName(),
+				customer.getPhone(), customer.getGender(), customer.getIndentity(), customer.getIdentityNumber(), addressResponse,
+				customer.getGroup(), customer.getLibrary(), customer.getUser());
+
+			return ResponseEntity.ok().body(customerResponse);
 		}
 		catch (Exception e)
 		{

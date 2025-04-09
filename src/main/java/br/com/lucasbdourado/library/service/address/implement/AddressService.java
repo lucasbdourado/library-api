@@ -1,9 +1,13 @@
 package br.com.lucasbdourado.library.service.address.implement;
 
 import br.com.lucasbdourado.library.entity.address.Address;
+import br.com.lucasbdourado.library.entity.city.City;
+import br.com.lucasbdourado.library.entity.neighborhood.Neighborhood;
 import br.com.lucasbdourado.library.entity.state.State;
 import br.com.lucasbdourado.library.exception.NotFoundException;
 import br.com.lucasbdourado.library.repository.address.AddressRepository;
+import br.com.lucasbdourado.library.repository.city.CityRepository;
+import br.com.lucasbdourado.library.repository.neighborhood.NeighborhoodRepository;
 import br.com.lucasbdourado.library.repository.state.StateRepository;
 import br.com.lucasbdourado.library.service.address.IAddressService;
 import java.util.List;
@@ -21,10 +25,17 @@ public class AddressService implements IAddressService
 
 	private final StateRepository stateRepository;
 
-	public AddressService(AddressRepository repository, StateRepository stateRepository)
+	private final CityRepository cityRepository;
+
+	private final NeighborhoodRepository neighborhoodRepository;
+
+	public AddressService(AddressRepository repository, StateRepository stateRepository,
+		CityRepository cityRepository, NeighborhoodRepository neighborhoodRepository)
 	{
 		this.repository = repository;
 		this.stateRepository = stateRepository;
+		this.cityRepository = cityRepository;
+		this.neighborhoodRepository = neighborhoodRepository;
 	}
 
 	@Override
@@ -48,9 +59,21 @@ public class AddressService implements IAddressService
 
 		State state = stateRepository.getReferenceById(stateId);
 
-		BeanUtils.copyProperties(addressPayload, address, "state");
+		Long cityId = addressPayload.getCity().getId();
+
+		City city = cityRepository.getReferenceById(cityId);
+
+		Long neighborhoodId = addressPayload.getNeighborhood().getId();
+
+		Neighborhood neighborhood = neighborhoodRepository.getReferenceById(neighborhoodId);
+
+		BeanUtils.copyProperties(addressPayload, address, "state", "city", "neighborhood");
 
 		address.setState(state);
+
+		address.setCity(city);
+
+		address.setNeighborhood(neighborhood);
 
 		return repository.save(address);
 	}

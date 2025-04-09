@@ -21,12 +21,13 @@ public class AuthenticationService implements IAuthenticationService, UserDetail
 {
 	private final UserRepository repository;
 
-	private JWTService jwtService;
+	private final JWTService jwtService;
 
 
-	public AuthenticationService(UserRepository repository)
+	public AuthenticationService(UserRepository repository, JWTService jwtService)
 	{
 		this.repository = repository;
+		this.jwtService = jwtService;
 	}
 
 	@Override

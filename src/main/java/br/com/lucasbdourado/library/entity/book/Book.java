@@ -1,6 +1,8 @@
 package br.com.lucasbdourado.library.entity.book;
 
 import br.com.lucasbdourado.library.entity.author.Author;
+import br.com.lucasbdourado.library.entity.bookgender.BookGender;
+import br.com.lucasbdourado.library.entity.booklanguage.BookLanguage;
 import br.com.lucasbdourado.library.entity.neighborhood.Neighborhood;
 import br.com.lucasbdourado.library.entity.publisher.Publisher;
 import br.com.lucasbdourado.library.entity.rating.Rating;
@@ -29,6 +31,9 @@ public class Book
 	private byte edition;
 
 	@ManyToOne
+	private BookGender gender;
+
+	@ManyToOne
 	private Publisher publisher;
 
 	private int quantity;
@@ -39,6 +44,9 @@ public class Book
 
 	@OneToMany(mappedBy = "rating", cascade = CascadeType.ALL)
 	private List<Rating> ratingList = new ArrayList<>();
+
+	@ManyToOne
+	private BookLanguage language;
 
 	//private PaymentMethod paymentMethod;
 
@@ -117,6 +125,16 @@ public class Book
 		this.edition = edition;
 	}
 
+	public BookGender getGender()
+	{
+		return gender;
+	}
+
+	public void setGender(BookGender gender)
+	{
+		this.gender = gender;
+	}
+
 	public Publisher getPublisher()
 	{
 		return publisher;
@@ -155,6 +173,16 @@ public class Book
 	public void setRatingList(List<Rating> ratingList)
 	{
 		this.ratingList = ratingList;
+	}
+
+	public BookLanguage getLanguage()
+	{
+		return language;
+	}
+
+	public void setLanguage(BookLanguage language)
+	{
+		this.language = language;
 	}
 
 	public short getPages()

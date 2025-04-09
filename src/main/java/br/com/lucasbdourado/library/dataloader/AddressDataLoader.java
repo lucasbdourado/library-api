@@ -6,7 +6,7 @@ import br.com.lucasbdourado.library.dto.state.StateJsonDTO;
 import br.com.lucasbdourado.library.entity.city.City;
 import br.com.lucasbdourado.library.entity.neighborhood.Neighborhood;
 import br.com.lucasbdourado.library.entity.state.State;
-import br.com.lucasbdourado.library.repository.StateRepository;
+import br.com.lucasbdourado.library.repository.state.StateRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;

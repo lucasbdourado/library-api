@@ -1,4 +1,4 @@
-package br.com.lucasbdourado.library.repository;
+package br.com.lucasbdourado.library.repository.state;
 
 import br.com.lucasbdourado.library.entity.state.State;
 import org.springframework.data.jpa.repository.JpaRepository;

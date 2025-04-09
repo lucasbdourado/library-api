@@ -6,16 +6,16 @@ import br.com.lucasbdourado.library.exception.NotFoundException;
 import br.com.lucasbdourado.library.mapper.library.LibraryMapper;
 import br.com.lucasbdourado.library.service.library.ILibraryService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/libraries")
+@Tag(name = "Bibliotecas", description = "Operações relacionadas às bibliotecas")
 public class LibraryREST
 {
 	private static final String NOT_FOUND = "Not Found";
@@ -28,7 +28,7 @@ public class LibraryREST
 	}
 
 	@GetMapping({"/", ""})
-	@Operation(summary = "Listar todos os bibliotecas", description = "Retorna uma lista com todos os bibliotecas.")
+	@Operation(summary = "Listar todos as bibliotecas", description = "Retorna uma lista com todos as bibliotecas.")
 	public ResponseEntity<Object> getLibraryList()
 	{
 		try

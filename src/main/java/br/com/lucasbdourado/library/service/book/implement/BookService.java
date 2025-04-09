@@ -8,7 +8,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,7 +15,6 @@ public class BookService implements IBookService
 {
 	private static final String NOT_FOUND = "Not Found";
 
-	@Autowired
 	private final BookRepository repository;
 
 	public BookService(BookRepository repository)

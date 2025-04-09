@@ -8,7 +8,6 @@ import br.com.lucasbdourado.library.service.authentication.IAuthenticationServic
 import br.com.lucasbdourado.library.service.jwt.JWTService;
 import java.util.GregorianCalendar;
 import java.util.Objects;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,10 +19,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthenticationService implements IAuthenticationService, UserDetailsService
 {
-	@Autowired
 	private final UserRepository repository;
 
-	@Autowired
 	private JWTService jwtService;
 
 

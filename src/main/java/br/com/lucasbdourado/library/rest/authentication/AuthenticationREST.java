@@ -8,7 +8,6 @@ import br.com.lucasbdourado.library.exception.UnauthorizedException;
 import br.com.lucasbdourado.library.mapper.user.UserMapper;
 import br.com.lucasbdourado.library.service.authentication.IAuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,10 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthenticationREST
 {
-	@Autowired
 	private final IAuthenticationService service;
 
-	@Autowired
 	private final AuthenticationManager authenticationManager;
 
 	public AuthenticationREST(IAuthenticationService service,

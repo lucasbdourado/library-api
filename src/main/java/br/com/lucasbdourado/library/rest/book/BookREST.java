@@ -6,20 +6,20 @@ import br.com.lucasbdourado.library.exception.NotFoundException;
 import br.com.lucasbdourado.library.mapper.book.BookMapper;
 import br.com.lucasbdourado.library.service.book.IBookService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import java.util.UUID;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/books")
+@Tag(name = "Livros", description = "Operações relacionadas aos livros / obras")
 public class BookREST
 {
 	private static final String NOT_FOUND = "Not Found";
 
-	@Autowired
 	private final IBookService service;
 
 	public BookREST(IBookService service)

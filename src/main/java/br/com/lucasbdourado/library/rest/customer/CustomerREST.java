@@ -1,24 +1,14 @@
 package br.com.lucasbdourado.library.rest.customer;
 
-import br.com.lucasbdourado.library.dto.address.AddressResponse;
-import br.com.lucasbdourado.library.dto.city.CityResponse;
 import br.com.lucasbdourado.library.dto.customer.CustomerResponse;
-import br.com.lucasbdourado.library.dto.neighborhood.NeighborhoodResponse;
-import br.com.lucasbdourado.library.dto.state.StateResponse;
-import br.com.lucasbdourado.library.entity.address.Address;
-import br.com.lucasbdourado.library.entity.city.City;
 import br.com.lucasbdourado.library.entity.customer.Customer;
-import br.com.lucasbdourado.library.entity.neighborhood.Neighborhood;
-import br.com.lucasbdourado.library.entity.state.State;
 import br.com.lucasbdourado.library.exception.NotFoundException;
 import br.com.lucasbdourado.library.mapper.customer.CustomerMapper;
 import br.com.lucasbdourado.library.service.customer.ICustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

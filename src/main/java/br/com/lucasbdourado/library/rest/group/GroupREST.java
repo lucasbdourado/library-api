@@ -6,6 +6,7 @@ import br.com.lucasbdourado.library.exception.NotFoundException;
 import br.com.lucasbdourado.library.mapper.group.GroupMapper;
 import br.com.lucasbdourado.library.service.group.IGroupService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/groups")
+@Tag(name = "Grupos", description = "Operações relacionadas aos grupos de usuários")
 public class GroupREST
 {
 

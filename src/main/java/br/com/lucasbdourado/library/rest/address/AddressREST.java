@@ -7,6 +7,7 @@ import br.com.lucasbdourado.library.mapper.address.AddressMapper;
 import br.com.lucasbdourado.library.mapper.customer.CustomerMapper;
 import br.com.lucasbdourado.library.service.address.IAddressService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/address")
+@Tag(name = "Endereços", description = "Operações relacionadas aos endereços")
 public class AddressREST
 {
 

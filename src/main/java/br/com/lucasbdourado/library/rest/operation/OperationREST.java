@@ -5,22 +5,21 @@ import br.com.lucasbdourado.library.entity.operation.Operation;
 import br.com.lucasbdourado.library.exception.NotFoundException;
 import br.com.lucasbdourado.library.mapper.operation.OperationMapper;
 import br.com.lucasbdourado.library.service.operation.IOperationService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/operations")
+@Tag(name = "Operações", description = "Operações relacionadas às operações de grupos")
 public class OperationREST
 {
 
 	private static final String NOT_FOUND = "Not Found";
 
-	@Autowired
 	private final IOperationService service;
 
 	public OperationREST(IOperationService service)

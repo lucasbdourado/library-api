@@ -3,7 +3,6 @@ package br.com.lucasbdourado.library.service.user.implement;
 import br.com.lucasbdourado.library.exception.NotFoundException;
 import br.com.lucasbdourado.library.repository.user.UserRepository;
 import br.com.lucasbdourado.library.service.user.IUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +11,6 @@ public class UserService implements IUserService
 {
 	private static final String NOT_FOUND = "Not Found";
 
-	@Autowired
 	private final UserRepository repository;
 
 	public UserService(UserRepository repository)

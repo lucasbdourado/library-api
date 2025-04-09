@@ -3,10 +3,7 @@ package br.com.lucasbdourado.library.entity.address;
 import br.com.lucasbdourado.library.entity.city.City;
 import br.com.lucasbdourado.library.entity.neighborhood.Neighborhood;
 import br.com.lucasbdourado.library.entity.state.State;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.UUID;
@@ -23,13 +20,13 @@ public class Address implements Serializable
 
 	private String country;
 
-	@OneToOne
+	@ManyToOne
 	private State state;
 
-	@OneToOne
+	@ManyToOne
 	private City city;
 
-	@OneToOne
+	@ManyToOne
 	private Neighborhood neighborhood;
 
 	private String zip;

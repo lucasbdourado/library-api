@@ -9,6 +9,7 @@ import br.com.lucasbdourado.library.entity.city.City;
 import br.com.lucasbdourado.library.entity.neighborhood.Neighborhood;
 import br.com.lucasbdourado.library.entity.state.State;
 import br.com.lucasbdourado.library.exception.NotFoundException;
+import br.com.lucasbdourado.library.mapper.address.AddressMapper;
 import br.com.lucasbdourado.library.service.address.IAddressService;
 import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
@@ -78,23 +79,7 @@ public class AddressREST
 		{
 			Address address = service.persist(addressPayload);
 
-			State state = address.getState();
-
-			City city = address.getCity();
-
-			Neighborhood neighborhood = address.getNeighborhood();
-
-			StateResponse stateResponse = new StateResponse(state.getId(), state.getCode(),
-				state.getName(), state.getStateAcronym());
-
-			CityResponse cityResponse = new CityResponse(city.getId(), city.getCode(), city.getName());
-
-			NeighborhoodResponse neighborhoodResponse = new NeighborhoodResponse(neighborhood.getId(),
-				neighborhood.getCode(), neighborhood.getName(), neighborhood.getStateAcronym());
-
-			AddressResponse addressResponse = new AddressResponse(address.getId(), address.getCountry(),
-				stateResponse, cityResponse, neighborhoodResponse, address.getZip(),
-				address.getStreet(), address.getNumber());
+			AddressResponse addressResponse = AddressMapper.toResponse(address);
 
 			return ResponseEntity.ok().body(addressResponse);
 		}

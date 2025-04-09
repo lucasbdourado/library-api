@@ -15,8 +15,10 @@ import br.com.lucasbdourado.library.mapper.customer.CustomerMapper;
 import br.com.lucasbdourado.library.service.customer.ICustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,7 +46,10 @@ public class CustomerREST
 		{
 			List<Customer> customerList = service.findAll();
 
-			return ResponseEntity.ok().body(customerList);
+			List<CustomerResponse> customerResponseList = customerList.stream()
+				.map(CustomerMapper::toResponse).toList();
+
+			return ResponseEntity.ok().body(customerResponseList);
 		}
 		catch (Exception e)
 		{
@@ -61,7 +66,9 @@ public class CustomerREST
 		{
 			Customer customer = service.findById(id);
 
-			return ResponseEntity.ok().body(customer);
+			CustomerResponse customerResponse = CustomerMapper.toResponse(customer);
+
+			return ResponseEntity.ok().body(customerResponse);
 		}
 		catch (NotFoundException e)
 		{

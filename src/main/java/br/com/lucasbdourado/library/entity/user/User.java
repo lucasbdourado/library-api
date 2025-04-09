@@ -150,6 +150,16 @@ public class User implements UserDetails
 		return UserDetails.super.isEnabled();
 	}
 
+	public UserRole getRole()
+	{
+		return role;
+	}
+
+	public void setRole(UserRole role)
+	{
+		this.role = role;
+	}
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities()
 	{

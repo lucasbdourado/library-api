@@ -1,11 +1,15 @@
 package br.com.lucasbdourado.library.entity.customer;
 
 import br.com.lucasbdourado.library.entity.address.Address;
+import br.com.lucasbdourado.library.entity.group.Group;
+import br.com.lucasbdourado.library.entity.libraryunit.LibraryUnity;
 import br.com.lucasbdourado.library.entity.user.User;
 import jakarta.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -33,12 +37,29 @@ public class Customer implements Serializable
 	private Address address;
 
 	@OneToOne
+	private Group group;
+
+	@OneToOne
+	private LibraryUnity libraryUnity;
+
+	@OneToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User user;
 
 	private GregorianCalendar creationDate;
 
 	private GregorianCalendar updateDate;
+
+	@PrePersist
+	protected void onCreate() {
+		this.creationDate = new GregorianCalendar();
+		this.updateDate = new GregorianCalendar();
+	}
+
+	@PreUpdate
+	protected void onUpdate() {
+		this.updateDate = new GregorianCalendar();
+	}
 
 	public UUID getId()
 	{
@@ -108,6 +129,26 @@ public class Customer implements Serializable
 	public void setAddress(Address address)
 	{
 		this.address = address;
+	}
+
+	public Group getGroup()
+	{
+		return group;
+	}
+
+	public void setGroup(Group group)
+	{
+		this.group = group;
+	}
+
+	public LibraryUnity getLibraryUnity()
+	{
+		return libraryUnity;
+	}
+
+	public void setLibraryUnity(LibraryUnity libraryUnity)
+	{
+		this.libraryUnity = libraryUnity;
 	}
 
 	public User getUser()

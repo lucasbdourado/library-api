@@ -1,6 +1,7 @@
 package br.com.lucasbdourado.library.entity.neighborhood;
 
 import br.com.lucasbdourado.library.entity.city.City;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -17,6 +18,7 @@ public class Neighborhood
 	private String stateAcronym;
 
 	@ManyToOne
+	@JsonIgnore
 	private City city;
 
 	public Long getId()

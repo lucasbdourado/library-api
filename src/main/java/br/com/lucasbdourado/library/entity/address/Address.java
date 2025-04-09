@@ -1,8 +1,12 @@
 package br.com.lucasbdourado.library.entity.address;
 
+import br.com.lucasbdourado.library.entity.city.City;
+import br.com.lucasbdourado.library.entity.neighborhood.Neighborhood;
+import br.com.lucasbdourado.library.entity.state.State;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.UUID;
@@ -19,11 +23,14 @@ public class Address implements Serializable
 
 	private String country;
 
-	private String state;
+	@OneToOne
+	private State state;
 
-	private String city;
+	@OneToOne
+	private City city;
 
-	private String neighborhood;
+	@OneToOne
+	private Neighborhood neighborhood;
 
 	private String zip;
 
@@ -51,32 +58,32 @@ public class Address implements Serializable
 		this.country = country;
 	}
 
-	public String getState()
+	public State getState()
 	{
 		return state;
 	}
 
-	public void setState(String state)
+	public void setState(State state)
 	{
 		this.state = state;
 	}
 
-	public String getCity()
+	public City getCity()
 	{
 		return city;
 	}
 
-	public void setCity(String city)
+	public void setCity(City city)
 	{
 		this.city = city;
 	}
 
-	public String getNeighborhood()
+	public Neighborhood getNeighborhood()
 	{
 		return neighborhood;
 	}
 
-	public void setNeighborhood(String neighborhood)
+	public void setNeighborhood(Neighborhood neighborhood)
 	{
 		this.neighborhood = neighborhood;
 	}

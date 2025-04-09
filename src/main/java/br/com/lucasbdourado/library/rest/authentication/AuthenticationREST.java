@@ -2,8 +2,10 @@ package br.com.lucasbdourado.library.rest.authentication;
 
 import br.com.lucasbdourado.library.dto.authentication.AuthenticationRequestDto;
 import br.com.lucasbdourado.library.dto.authentication.AuthenticationResponseDto;
+import br.com.lucasbdourado.library.dto.user.UserResponse;
 import br.com.lucasbdourado.library.entity.user.User;
 import br.com.lucasbdourado.library.exception.UnauthorizedException;
+import br.com.lucasbdourado.library.mapper.user.UserMapper;
 import br.com.lucasbdourado.library.service.authentication.IAuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +67,9 @@ public class AuthenticationREST
 	{
 		try
 		{
-			return ResponseEntity.ok().body(service.register(user));
+			UserResponse userResponse = UserMapper.toResponse(service.register(user));
+
+			return ResponseEntity.ok().body(userResponse);
 		}
 		catch (Exception e)
 		{

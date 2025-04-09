@@ -1,15 +1,10 @@
 package br.com.lucasbdourado.library.rest.address;
 
 import br.com.lucasbdourado.library.dto.address.AddressResponse;
-import br.com.lucasbdourado.library.dto.city.CityResponse;
-import br.com.lucasbdourado.library.dto.neighborhood.NeighborhoodResponse;
-import br.com.lucasbdourado.library.dto.state.StateResponse;
 import br.com.lucasbdourado.library.entity.address.Address;
-import br.com.lucasbdourado.library.entity.city.City;
-import br.com.lucasbdourado.library.entity.neighborhood.Neighborhood;
-import br.com.lucasbdourado.library.entity.state.State;
 import br.com.lucasbdourado.library.exception.NotFoundException;
 import br.com.lucasbdourado.library.mapper.address.AddressMapper;
+import br.com.lucasbdourado.library.mapper.customer.CustomerMapper;
 import br.com.lucasbdourado.library.service.address.IAddressService;
 import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
@@ -38,9 +33,12 @@ public class AddressREST
 	{
 		try
 		{
-			List<Address> entityList = service.findAll();
+			List<Address> addressList = service.findAll();
 
-			return ResponseEntity.ok().body(entityList);
+			List<AddressResponse> addressResponseList = addressList.stream()
+				.map(AddressMapper::toResponse).toList();
+
+			return ResponseEntity.ok().body(addressResponseList);
 		}
 		catch (Exception e)
 		{
@@ -56,6 +54,8 @@ public class AddressREST
 		try
 		{
 			Address address = service.findById(id);
+
+			AddressResponse addressResponse = AddressMapper.toResponse(address);
 
 			return ResponseEntity.ok().body(address);
 		}
@@ -96,8 +96,11 @@ public class AddressREST
 	{
 		try
 		{
+			Address address = service.update(id, addressPayload);
 
-			return ResponseEntity.ok().body(service.update(id, addressPayload));
+			AddressResponse addressResponse = AddressMapper.toResponse(address);
+
+			return ResponseEntity.ok().body(addressResponse);
 		}
 		catch (NotFoundException e)
 		{

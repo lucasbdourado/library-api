@@ -1,7 +1,9 @@
 package br.com.lucasbdourado.library.rest.book;
 
+import br.com.lucasbdourado.library.dto.book.BookResponse;
 import br.com.lucasbdourado.library.entity.book.Book;
 import br.com.lucasbdourado.library.exception.NotFoundException;
+import br.com.lucasbdourado.library.mapper.book.BookMapper;
 import br.com.lucasbdourado.library.service.book.IBookService;
 import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
@@ -31,9 +33,12 @@ public class BookREST
 	{
 		try
 		{
-			List<Book> entityList = service.findAll();
+			List<Book> bookList = service.findAll();
 
-			return ResponseEntity.ok().body(entityList);
+			List<BookResponse> bookResponseList = bookList.stream()
+				.map(BookMapper::toResponse).toList();
+
+			return ResponseEntity.ok().body(bookResponseList);
 		}
 		catch (Exception e)
 		{
@@ -50,7 +55,9 @@ public class BookREST
 		{
 			Book book = service.findById(id);
 
-			return ResponseEntity.ok().body(book);
+			BookResponse bookResponse = BookMapper.toResponse(book);
+
+			return ResponseEntity.ok().body(bookResponse);
 		}
 		catch (NotFoundException e)
 		{
@@ -70,8 +77,11 @@ public class BookREST
 	{
 		try
 		{
+			Book book = service.persist(bookPayload);
 
-			return ResponseEntity.ok().body(service.persist(bookPayload));
+			BookResponse bookResponse = BookMapper.toResponse(book);
+
+			return ResponseEntity.ok().body(bookResponse);
 		}
 		catch (Exception e)
 		{
@@ -86,8 +96,11 @@ public class BookREST
 	{
 		try
 		{
+			Book book = service.update(id, bookPayload);
 
-			return ResponseEntity.ok().body(service.update(id, bookPayload));
+			BookResponse bookResponse = BookMapper.toResponse(book);
+
+			return ResponseEntity.ok().body(bookResponse);
 		}
 		catch (NotFoundException e)
 		{

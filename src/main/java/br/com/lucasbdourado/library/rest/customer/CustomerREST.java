@@ -107,8 +107,11 @@ public class CustomerREST
 	{
 		try
 		{
+			Customer customer = service.update(id, customerPayload);
 
-			return ResponseEntity.ok().body(service.update(id, customerPayload));
+			CustomerResponse customerResponse = CustomerMapper.toResponse(customer);
+
+			return ResponseEntity.ok().body(customerResponse);
 		}
 		catch (NotFoundException e)
 		{

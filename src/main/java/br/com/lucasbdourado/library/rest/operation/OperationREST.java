@@ -1,10 +1,13 @@
 package br.com.lucasbdourado.library.rest.operation;
 
+import br.com.lucasbdourado.library.dto.operation.OperationResponse;
 import br.com.lucasbdourado.library.entity.operation.Operation;
 import br.com.lucasbdourado.library.exception.NotFoundException;
+import br.com.lucasbdourado.library.mapper.operation.OperationMapper;
 import br.com.lucasbdourado.library.service.operation.IOperationService;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +36,9 @@ public class OperationREST
 		{
 			List<Operation> operationList = service.findAll();
 
-			return ResponseEntity.ok().body(operationList);
+			List<OperationResponse> operationResponseList = operationList.stream().map(OperationMapper::toResponse).toList();
+
+			return ResponseEntity.ok().body(operationResponseList);
 		}
 		catch (Exception e)
 		{
@@ -50,7 +55,9 @@ public class OperationREST
 		{
 			Operation operation = service.findById(id);
 
-			return ResponseEntity.ok().body(operation);
+			OperationResponse operationResponse = OperationMapper.toResponse(operation);
+
+			return ResponseEntity.ok().body(operationResponse);
 		}
 		catch (NotFoundException e)
 		{
@@ -70,8 +77,11 @@ public class OperationREST
 	{
 		try
 		{
+			Operation operation = service.persist(operationPayload);
 
-			return ResponseEntity.ok().body(service.persist(operationPayload));
+			OperationResponse operationResponse = OperationMapper.toResponse(operation);
+
+			return ResponseEntity.ok().body(operationResponse);
 		}
 		catch (Exception e)
 		{
@@ -86,8 +96,11 @@ public class OperationREST
 	{
 		try
 		{
+			Operation operation = service.update(id, operationPayload);
 
-			return ResponseEntity.ok().body(service.update(id, operationPayload));
+			OperationResponse operationResponse = OperationMapper.toResponse(operation);
+
+			return ResponseEntity.ok().body(operationResponse);
 		}
 		catch (NotFoundException e)
 		{

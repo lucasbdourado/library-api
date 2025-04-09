@@ -1,11 +1,14 @@
 package br.com.lucasbdourado.library.rest.library;
 
+import br.com.lucasbdourado.library.dto.library.LibraryResponse;
 import br.com.lucasbdourado.library.entity.library.Library;
 import br.com.lucasbdourado.library.exception.NotFoundException;
+import br.com.lucasbdourado.library.mapper.library.LibraryMapper;
 import br.com.lucasbdourado.library.service.library.ILibraryService;
 import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +35,10 @@ public class LibraryREST
 		{
 			List<Library> libraryList = service.findAll();
 
-			return ResponseEntity.ok().body(libraryList);
+			List<LibraryResponse> responseList = libraryList.stream().map(LibraryMapper::toResponse)
+				.toList();
+
+			return ResponseEntity.ok().body(responseList);
 		}
 		catch (Exception e)
 		{
@@ -49,7 +55,9 @@ public class LibraryREST
 		{
 			Library library = service.findById(id);
 
-			return ResponseEntity.ok().body(library);
+			LibraryResponse libraryResponse = LibraryMapper.toResponse(library);
+
+			return ResponseEntity.ok().body(libraryResponse);
 		}
 		catch (NotFoundException e)
 		{
@@ -69,8 +77,11 @@ public class LibraryREST
 	{
 		try
 		{
+			Library library = service.persist(libraryPayload);
 
-			return ResponseEntity.ok().body(service.persist(libraryPayload));
+			LibraryResponse libraryResponse = LibraryMapper.toResponse(library);
+
+			return ResponseEntity.ok().body(libraryResponse);
 		}
 		catch (Exception e)
 		{
@@ -85,8 +96,11 @@ public class LibraryREST
 	{
 		try
 		{
+			Library library = service.update(id, libraryPayload);
 
-			return ResponseEntity.ok().body(service.update(id, libraryPayload));
+			LibraryResponse libraryResponse = LibraryMapper.toResponse(library);
+
+			return ResponseEntity.ok().body(libraryResponse);
 		}
 		catch (NotFoundException e)
 		{

@@ -1,7 +1,9 @@
 package br.com.lucasbdourado.library.rest.group;
 
+import br.com.lucasbdourado.library.dto.group.GroupResponse;
 import br.com.lucasbdourado.library.entity.group.Group;
 import br.com.lucasbdourado.library.exception.NotFoundException;
+import br.com.lucasbdourado.library.mapper.group.GroupMapper;
 import br.com.lucasbdourado.library.service.group.IGroupService;
 import io.swagger.v3.oas.annotations.Operation;
 import java.util.List;
@@ -32,7 +34,10 @@ public class GroupREST
 		{
 			List<Group> groupList = service.findAll();
 
-			return ResponseEntity.ok().body(groupList);
+			List<GroupResponse> groupResponseList = groupList.stream().map(GroupMapper::toResponse)
+				.toList();
+
+			return ResponseEntity.ok().body(groupResponseList);
 		}
 		catch (Exception e)
 		{
@@ -49,7 +54,9 @@ public class GroupREST
 		{
 			Group group = service.findById(id);
 
-			return ResponseEntity.ok().body(group);
+			GroupResponse groupResponse = GroupMapper.toResponse(group);
+
+			return ResponseEntity.ok().body(groupResponse);
 		}
 		catch (NotFoundException e)
 		{
@@ -69,8 +76,11 @@ public class GroupREST
 	{
 		try
 		{
+			Group group = service.persist(groupPayload);
 
-			return ResponseEntity.ok().body(service.persist(groupPayload));
+			GroupResponse groupResponse = GroupMapper.toResponse(group);
+
+			return ResponseEntity.ok().body(groupResponse);
 		}
 		catch (Exception e)
 		{
@@ -85,8 +95,11 @@ public class GroupREST
 	{
 		try
 		{
+			Group group = service.update(id, groupPayload);
 
-			return ResponseEntity.ok().body(service.update(id, groupPayload));
+			GroupResponse groupResponse = GroupMapper.toResponse(group);
+
+			return ResponseEntity.ok().body(groupResponse);
 		}
 		catch (NotFoundException e)
 		{

@@ -3,6 +3,7 @@ package br.com.lucasbdourado.library.config;
 import br.com.lucasbdourado.library.filter.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -35,9 +36,29 @@ public class SecurityConfig
 	{
 		return http.csrf(AbstractHttpConfigurer::disable)
 			.sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-			.authorizeHttpRequests(
-				auth -> auth.anyRequest().permitAll())
-			.authenticationProvider(authenticationProvider())
+			.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**").permitAll()
+				.requestMatchers(HttpMethod.POST, "/authors/").hasAuthority("ROLE_ADMIN")
+				.requestMatchers(HttpMethod.PUT, "/authors/**").hasAuthority("ROLE_ADMIN")
+				.requestMatchers(HttpMethod.DELETE, "/authors/**").hasAuthority("ROLE_ADMIN")
+				.requestMatchers(HttpMethod.POST, "/books/").hasAuthority("ROLE_ADMIN")
+				.requestMatchers(HttpMethod.PUT, "/books/**").hasAuthority("ROLE_ADMIN")
+				.requestMatchers(HttpMethod.DELETE, "/books/**").hasAuthority("ROLE_ADMIN")
+				.requestMatchers(HttpMethod.POST, "/groups/").hasAuthority("ROLE_ADMIN")
+				.requestMatchers(HttpMethod.PUT, "/groups/**").hasAuthority("ROLE_ADMIN")
+				.requestMatchers(HttpMethod.DELETE, "/groups/**").hasAuthority("ROLE_ADMIN")
+				.requestMatchers(HttpMethod.GET, "/operations").hasAuthority("ROLE_ADMIN")
+				.requestMatchers(HttpMethod.GET, "/operations/").hasAuthority("ROLE_ADMIN")
+				.requestMatchers(HttpMethod.GET, "/operations/**").hasAuthority("ROLE_ADMIN")
+				.requestMatchers(HttpMethod.POST, "/operations/").hasAuthority("ROLE_ADMIN")
+				.requestMatchers(HttpMethod.PUT, "/operations/**").hasAuthority("ROLE_ADMIN")
+				.requestMatchers(HttpMethod.DELETE, "/operations/**").hasAuthority("ROLE_ADMIN")
+				.requestMatchers(HttpMethod.POST, "/publishers/").hasAuthority("ROLE_ADMIN")
+				.requestMatchers(HttpMethod.PUT, "/publishers/**").hasAuthority("ROLE_ADMIN")
+				.requestMatchers(HttpMethod.DELETE, "/publishers/**").hasAuthority("ROLE_ADMIN")
+				.requestMatchers(HttpMethod.POST, "/libraries/").hasAuthority("ROLE_ADMIN")
+				.requestMatchers(HttpMethod.PUT, "/libraries/**").hasAuthority("ROLE_ADMIN")
+				.requestMatchers(HttpMethod.DELETE, "/libraries/**").hasAuthority("ROLE_ADMIN")
+				.anyRequest().authenticated())
 			.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class).build();
 	}
 

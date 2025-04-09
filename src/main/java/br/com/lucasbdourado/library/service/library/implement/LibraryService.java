@@ -18,12 +18,9 @@ public class LibraryService implements ILibraryService
 
 	private final LibraryRepository repository;
 
-	private final AddressRepository addressRepository;
-
-	public LibraryService(LibraryRepository repository, AddressRepository addressRepository)
+	public LibraryService(LibraryRepository repository)
 	{
 		this.repository = repository;
-		this.addressRepository = addressRepository;
 	}
 
 	@Override

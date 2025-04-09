@@ -1,6 +1,7 @@
 package br.com.lucasbdourado.library.entity.operation;
 
 import br.com.lucasbdourado.library.entity.group.Group;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.List;
 import java.util.UUID;
@@ -14,9 +15,10 @@ public class Operation
 
 	private String description;
 
-	private OperationStatus status;
+	private OperationStatus status = OperationStatus.STORED;
 
 	@ManyToMany(mappedBy = "operationList")
+	@JsonIgnore
 	private List<Group> groups;
 
 	public UUID getId()

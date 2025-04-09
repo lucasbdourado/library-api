@@ -2,7 +2,7 @@ package br.com.lucasbdourado.library.entity.customer;
 
 import br.com.lucasbdourado.library.entity.address.Address;
 import br.com.lucasbdourado.library.entity.group.Group;
-import br.com.lucasbdourado.library.entity.libraryunit.LibraryUnity;
+import br.com.lucasbdourado.library.entity.library.Library;
 import br.com.lucasbdourado.library.entity.user.User;
 import jakarta.persistence.*;
 import java.io.Serial;
@@ -38,7 +38,7 @@ public class Customer implements Serializable
 	private Group group;
 
 	@OneToOne
-	private LibraryUnity libraryUnity;
+	private Library library;
 
 	@OneToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -139,14 +139,14 @@ public class Customer implements Serializable
 		this.group = group;
 	}
 
-	public LibraryUnity getLibraryUnity()
+	public Library getLibrary()
 	{
-		return libraryUnity;
+		return library;
 	}
 
-	public void setLibraryUnity(LibraryUnity libraryUnity)
+	public void setLibrary(Library library)
 	{
-		this.libraryUnity = libraryUnity;
+		this.library = library;
 	}
 
 	public User getUser()

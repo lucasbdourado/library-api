@@ -1,5 +1,6 @@
 package br.com.lucasbdourado.library.entity.book;
 
+import br.com.lucasbdourado.library.entity.publisher.Publisher;
 import jakarta.persistence.*;
 import java.util.GregorianCalendar;
 import java.util.UUID;
@@ -20,6 +21,9 @@ public class Book
 	private GregorianCalendar publishDate;
 
 	private byte edition;
+
+	@ManyToOne
+	private Publisher publisher;
 
 	private int quantity;
 
@@ -98,6 +102,16 @@ public class Book
 	public void setEdition(byte edition)
 	{
 		this.edition = edition;
+	}
+
+	public Publisher getPublisher()
+	{
+		return publisher;
+	}
+
+	public void setPublisher(Publisher publisher)
+	{
+		this.publisher = publisher;
 	}
 
 	public int getQuantity()

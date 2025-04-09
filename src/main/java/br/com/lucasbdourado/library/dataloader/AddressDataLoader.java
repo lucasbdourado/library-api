@@ -60,8 +60,8 @@ public class AddressDataLoader
 			State state = new State();
 			state.setName(stateDTO.name());
 			state.setCode(stateDTO.code());
-			state.setAcronym(stateDTO.acronym());
-			stateMap.put(stateDTO.acronym(), state);
+			state.setStateAcronym(stateDTO.stateAcronym());
+			stateMap.put(stateDTO.stateAcronym(), state);
 		}
 
 		for (CityJsonDTO cityDTO : cityDTOList)

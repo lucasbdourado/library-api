@@ -1,6 +1,7 @@
 package br.com.lucasbdourado.library.entity.state;
 
 import br.com.lucasbdourado.library.entity.city.City;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +17,10 @@ public class State
 
 	private String name;
 
-	private String acronym;
+	private String stateAcronym;
 
 	@OneToMany(mappedBy = "state", cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<City> cities = new ArrayList<>();
 
 	public Long getId()
@@ -51,14 +53,14 @@ public class State
 		this.name = name;
 	}
 
-	public String getAcronym()
+	public String getStateAcronym()
 	{
-		return acronym;
+		return stateAcronym;
 	}
 
-	public void setAcronym(String acronym)
+	public void setStateAcronym(String stateAcronym)
 	{
-		this.acronym = acronym;
+		this.stateAcronym = stateAcronym;
 	}
 
 	public List<City> getCities()

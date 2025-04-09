@@ -11,6 +11,7 @@ import br.com.lucasbdourado.library.entity.customer.Customer;
 import br.com.lucasbdourado.library.entity.neighborhood.Neighborhood;
 import br.com.lucasbdourado.library.entity.state.State;
 import br.com.lucasbdourado.library.exception.NotFoundException;
+import br.com.lucasbdourado.library.mapper.customer.CustomerMapper;
 import br.com.lucasbdourado.library.service.customer.ICustomerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -82,29 +83,7 @@ public class CustomerREST
 		{
 			Customer customer = service.persist(customerPayload);
 
-			Address address = customer.getAddress();
-
-			State state = address.getState();
-
-			City city = address.getCity();
-
-			Neighborhood neighborhood = address.getNeighborhood();
-
-			StateResponse stateResponse = new StateResponse(state.getId(), state.getCode(),
-				state.getName(), state.getStateAcronym());
-
-			CityResponse cityResponse = new CityResponse(city.getId(), city.getCode(), city.getName());
-
-			NeighborhoodResponse neighborhoodResponse = new NeighborhoodResponse(neighborhood.getId(),
-				neighborhood.getCode(), neighborhood.getName(), neighborhood.getStateAcronym());
-
-			AddressResponse addressResponse = new AddressResponse(address.getId(), address.getCountry(),
-				stateResponse, cityResponse, neighborhoodResponse, address.getZip(),
-				address.getStreet(), address.getNumber());
-
-			CustomerResponse customerResponse = new CustomerResponse(customer.getId(), customer.getName(),
-				customer.getPhone(), customer.getGender(), customer.getIndentity(), customer.getIdentityNumber(), addressResponse,
-				customer.getGroup(), customer.getLibrary(), customer.getUser());
+			CustomerResponse customerResponse = CustomerMapper.toResponse(customer);
 
 			return ResponseEntity.ok().body(customerResponse);
 		}

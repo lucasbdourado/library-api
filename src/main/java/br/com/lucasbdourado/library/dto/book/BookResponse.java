@@ -1,6 +1,7 @@
 package br.com.lucasbdourado.library.dto.book;
 
 import br.com.lucasbdourado.library.dto.author.AuthorResponse;
+import br.com.lucasbdourado.library.dto.bookgender.BookGenderResponse;
 import br.com.lucasbdourado.library.dto.publisher.PublisherResponse;
 import br.com.lucasbdourado.library.dto.rating.RatingResponse;
 import java.util.GregorianCalendar;
@@ -8,8 +9,9 @@ import java.util.List;
 import java.util.UUID;
 
 public record BookResponse(UUID id, String name, String code, String isbn, GregorianCalendar publishDate,
-                           byte edition, PublisherResponse publisher, int quantity,
-                           List<AuthorResponse> authorList, List<RatingResponse> ratingList, short pages,
-                           String collection, String description, String series)
+                           byte edition, BookGenderResponse gender, PublisherResponse publisher,
+                           int quantity, List<AuthorResponse> authorList,
+                           List<RatingResponse> ratingList, short pages, String collection,
+                           String description, String series)
 {
 }

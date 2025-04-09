@@ -1,8 +1,14 @@
 package br.com.lucasbdourado.library.entity.book;
 
+import br.com.lucasbdourado.library.entity.author.Author;
+import br.com.lucasbdourado.library.entity.neighborhood.Neighborhood;
 import br.com.lucasbdourado.library.entity.publisher.Publisher;
+import br.com.lucasbdourado.library.entity.rating.Rating;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -26,6 +32,13 @@ public class Book
 	private Publisher publisher;
 
 	private int quantity;
+
+	@ManyToMany(mappedBy = "bookList")
+	@JsonIgnore
+	private List<Author> authorList;
+
+	@OneToMany(mappedBy = "rating", cascade = CascadeType.ALL)
+	private List<Rating> ratingList = new ArrayList<>();
 
 	//private PaymentMethod paymentMethod;
 
@@ -122,6 +135,26 @@ public class Book
 	public void setQuantity(int quantity)
 	{
 		this.quantity = quantity;
+	}
+
+	public List<Author> getAuthorList()
+	{
+		return authorList;
+	}
+
+	public void setAuthorList(List<Author> authorList)
+	{
+		this.authorList = authorList;
+	}
+
+	public List<Rating> getRatingList()
+	{
+		return ratingList;
+	}
+
+	public void setRatingList(List<Rating> ratingList)
+	{
+		this.ratingList = ratingList;
 	}
 
 	public short getPages()

@@ -1,11 +1,11 @@
-package br.com.lucasbdourado.library.entity.libraryunit;
+package br.com.lucasbdourado.library.entity.library;
 
 import br.com.lucasbdourado.library.entity.address.Address;
 import jakarta.persistence.*;
 import java.util.UUID;
 
 @Entity
-public class LibraryUnity
+public class Library
 {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

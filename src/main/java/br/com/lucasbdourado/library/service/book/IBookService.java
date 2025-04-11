@@ -1,18 +1,9 @@
 package br.com.lucasbdourado.library.service.book;
 
 import br.com.lucasbdourado.library.entity.book.Book;
-import java.util.List;
+import br.com.lucasbdourado.library.service.generic.GenericBaseServiceInterface;
 import java.util.UUID;
 
-public interface IBookService
+public interface IBookService extends GenericBaseServiceInterface<Book, UUID>
 {
-	List<Book> findAll();
-
-	Book findById(UUID id);
-
-	Book persist(Book bookPayload);
-
-	Book update(UUID id, Book bookPayload);
-
-	void delete(UUID id);
 }

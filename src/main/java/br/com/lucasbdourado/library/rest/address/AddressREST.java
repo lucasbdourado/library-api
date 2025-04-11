@@ -4,7 +4,6 @@ import br.com.lucasbdourado.library.dto.address.AddressResponse;
 import br.com.lucasbdourado.library.entity.address.Address;
 import br.com.lucasbdourado.library.exception.NotFoundException;
 import br.com.lucasbdourado.library.mapper.address.AddressMapper;
-import br.com.lucasbdourado.library.mapper.customer.CustomerMapper;
 import br.com.lucasbdourado.library.service.address.IAddressService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -59,7 +58,7 @@ public class AddressREST
 
 			AddressResponse addressResponse = AddressMapper.toResponse(address);
 
-			return ResponseEntity.ok().body(address);
+			return ResponseEntity.ok().body(addressResponse);
 		}
 		catch (NotFoundException e)
 		{

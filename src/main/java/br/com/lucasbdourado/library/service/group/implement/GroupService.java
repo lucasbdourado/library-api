@@ -5,14 +5,16 @@ import br.com.lucasbdourado.library.entity.operation.Operation;
 import br.com.lucasbdourado.library.exception.NotFoundException;
 import br.com.lucasbdourado.library.repository.group.GroupRepository;
 import br.com.lucasbdourado.library.repository.operation.OperationRepository;
+import br.com.lucasbdourado.library.service.generic.implement.GenericBaseService;
 import br.com.lucasbdourado.library.service.group.IGroupService;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class GroupService implements IGroupService
+public class GroupService extends GenericBaseService<Group, UUID> implements IGroupService
 {
 	private static final String NOT_FOUND = "Not Found";
 
@@ -27,15 +29,21 @@ public class GroupService implements IGroupService
 	}
 
 	@Override
+	protected JpaRepository<Group, UUID> getRepository()
+	{
+		return repository;
+	}
+
+	@Override
 	public List<Group> findAll()
 	{
-		return repository.findAll();
+		return super.findAll();
 	}
 
 	@Override
 	public Group findById(UUID id)
 	{
-		return repository.findById(id).orElseThrow(() -> new NotFoundException(NOT_FOUND));
+		return super.findById(id);
 	}
 
 	@Override
@@ -72,8 +80,6 @@ public class GroupService implements IGroupService
 	@Override
 	public void delete(UUID id) throws NotFoundException
 	{
-		Group group = repository.findById(id).orElseThrow(() -> new NotFoundException(NOT_FOUND));
-
-		repository.delete(group);
+		super.delete(id);
 	}
 }

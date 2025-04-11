@@ -1,18 +1,9 @@
 package br.com.lucasbdourado.library.service.author;
 
 import br.com.lucasbdourado.library.entity.author.Author;
-import java.util.List;
+import br.com.lucasbdourado.library.service.generic.GenericBaseServiceInterface;
 import java.util.UUID;
 
-public interface IAuthorService
+public interface IAuthorService extends GenericBaseServiceInterface<Author, UUID>
 {
-	List<Author> findAll();
-
-	Author findById(UUID id);
-
-	Author persist(Author authorPayload);
-
-	Author update(UUID id, Author authorPayload);
-
-	void delete(UUID id);
 }

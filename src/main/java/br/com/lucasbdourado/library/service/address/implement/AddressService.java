@@ -10,17 +10,16 @@ import br.com.lucasbdourado.library.repository.city.CityRepository;
 import br.com.lucasbdourado.library.repository.neighborhood.NeighborhoodRepository;
 import br.com.lucasbdourado.library.repository.state.StateRepository;
 import br.com.lucasbdourado.library.service.address.IAddressService;
+import br.com.lucasbdourado.library.service.generic.implement.GenericBaseService;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AddressService implements IAddressService
+public class AddressService extends GenericBaseService<Address, UUID> implements IAddressService
 {
-
-	private static final String NOT_FOUND = "Not Found";
-
 	private final AddressRepository repository;
 
 	private final StateRepository stateRepository;
@@ -39,15 +38,20 @@ public class AddressService implements IAddressService
 	}
 
 	@Override
+	protected JpaRepository<Address, UUID> getRepository() {
+		return repository;
+	}
+
+	@Override
 	public List<Address> findAll()
 	{
-		return repository.findAll();
+		return super.findAll();
 	}
 
 	@Override
 	public Address findById(UUID id)
 	{
-		return repository.findById(id).orElseThrow(() -> new NotFoundException(NOT_FOUND));
+		return super.findById(id);
 	}
 
 	@Override
@@ -81,18 +85,12 @@ public class AddressService implements IAddressService
 	@Override
 	public Address update(UUID id, Address address)
 	{
-		Address savedAddress = repository.findById(id).orElseThrow(() -> new NotFoundException(NOT_FOUND));
-
-		BeanUtils.copyProperties(address, savedAddress, "id", "creationDate");
-
-		return repository.save(savedAddress);
+		return super.update(id, address);
 	}
 
 	@Override
 	public void delete(UUID id) throws NotFoundException
 	{
-		Address address = repository.findById(id).orElseThrow(() -> new NotFoundException(NOT_FOUND));
-
-		repository.delete(address);
+		super.delete(id);
 	}
 }

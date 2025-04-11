@@ -6,6 +6,7 @@ import br.com.lucasbdourado.library.entity.state.State;
 import jakarta.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.GregorianCalendar;
 import java.util.UUID;
 
 @Entity
@@ -34,6 +35,23 @@ public class Address implements Serializable
 	private String street;
 
 	private String number;
+
+	private GregorianCalendar creationDate;
+
+	private GregorianCalendar updateDate;
+
+	@PrePersist
+	public void updateCreationDateAndUpdateDate()
+	{
+		this.setCreationDate(new GregorianCalendar());
+		this.setUpdateDate(new GregorianCalendar());
+	}
+
+	@PreUpdate
+	public void updateUpdateDate()
+	{
+		this.setUpdateDate(new GregorianCalendar());
+	}
 
 	public UUID getId()
 	{
@@ -113,5 +131,25 @@ public class Address implements Serializable
 	public void setNumber(String number)
 	{
 		this.number = number;
+	}
+
+	public GregorianCalendar getCreationDate()
+	{
+		return creationDate;
+	}
+
+	public void setCreationDate(GregorianCalendar creationDate)
+	{
+		this.creationDate = creationDate;
+	}
+
+	public GregorianCalendar getUpdateDate()
+	{
+		return updateDate;
+	}
+
+	public void setUpdateDate(GregorianCalendar updateDate)
+	{
+		this.updateDate = updateDate;
 	}
 }

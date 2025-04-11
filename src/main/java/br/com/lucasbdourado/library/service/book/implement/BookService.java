@@ -4,17 +4,15 @@ import br.com.lucasbdourado.library.entity.book.Book;
 import br.com.lucasbdourado.library.exception.NotFoundException;
 import br.com.lucasbdourado.library.repository.book.BookRepository;
 import br.com.lucasbdourado.library.service.book.IBookService;
-import java.util.GregorianCalendar;
+import br.com.lucasbdourado.library.service.generic.implement.GenericBaseService;
 import java.util.List;
 import java.util.UUID;
-import org.springframework.beans.BeanUtils;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BookService implements IBookService
+public class BookService extends GenericBaseService<Book, UUID> implements IBookService
 {
-	private static final String NOT_FOUND = "Not Found";
-
 	private final BookRepository repository;
 
 	public BookService(BookRepository repository)
@@ -23,47 +21,38 @@ public class BookService implements IBookService
 	}
 
 	@Override
+	protected JpaRepository<Book, UUID> getRepository()
+	{
+		return repository;
+	}
+
+	@Override
 	public List<Book> findAll()
 	{
-		return repository.findAll();
+		return super.findAll();
 	}
 
 	@Override
 	public Book findById(UUID id)
 	{
-		return repository.findById(id).orElseThrow(() -> new NotFoundException(NOT_FOUND));
+		return super.findById(id);
 	}
 
 	@Override
 	public Book persist(Book bookPayload)
 	{
-		Book book = new Book();
-
-		BeanUtils.copyProperties(bookPayload, book);
-
-		book.setCreationDate(new GregorianCalendar());
-		book.setUpdateDate(new GregorianCalendar());
-
-		return repository.save(book);
+		return super.persist(bookPayload);
 	}
 
 	@Override
 	public Book update(UUID id, Book book)
 	{
-		Book savedBook = repository.findById(id).orElseThrow(() -> new NotFoundException(NOT_FOUND));
-
-		BeanUtils.copyProperties(book, savedBook, "id", "creationDate");
-
-		savedBook.setUpdateDate(new GregorianCalendar());
-
-		return repository.save(savedBook);
+		return super.update(id, book);
 	}
 
 	@Override
 	public void delete(UUID id) throws NotFoundException
 	{
-		Book book = repository.findById(id).orElseThrow(() -> new NotFoundException(NOT_FOUND));
-
-		repository.delete(book);
+		super.delete(id);
 	}
 }

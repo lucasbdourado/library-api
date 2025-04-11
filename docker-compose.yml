@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  mysql:
+    platform: linux/x86_64
+    image: mysql:8.0
+    command: --lower_case_table_names=1
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: library
+      MYSQL_USER: lucaserq
+      MYSQL_PASSWORD: lucas@123
+    ports:
+      - "3306:3306"
+    container_name: mysql
+    volumes:
+      - mysql-data:/var/lib/mysql
+    network_mode: "bridge"
+
+  app:
+    build: .
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/library
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: "true"
+    ports:
+      - "8080:8080"
+
+volumes:
+  mysql-data:

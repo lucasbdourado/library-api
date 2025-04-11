@@ -2,20 +2,17 @@ package br.com.lucasbdourado.library.service.library.implement;
 
 import br.com.lucasbdourado.library.entity.library.Library;
 import br.com.lucasbdourado.library.exception.NotFoundException;
-import br.com.lucasbdourado.library.repository.address.AddressRepository;
 import br.com.lucasbdourado.library.repository.library.LibraryRepository;
+import br.com.lucasbdourado.library.service.generic.implement.GenericBaseService;
 import br.com.lucasbdourado.library.service.library.ILibraryService;
 import java.util.List;
 import java.util.UUID;
-import org.springframework.beans.BeanUtils;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LibraryService implements ILibraryService
+public class LibraryService extends GenericBaseService<Library, UUID> implements ILibraryService
 {
-
-	private static final String NOT_FOUND = "Not Found";
-
 	private final LibraryRepository repository;
 
 	public LibraryService(LibraryRepository repository)
@@ -24,42 +21,38 @@ public class LibraryService implements ILibraryService
 	}
 
 	@Override
+	protected JpaRepository<Library, UUID> getRepository()
+	{
+		return repository;
+	}
+
+	@Override
 	public List<Library> findAll()
 	{
-		return repository.findAll();
+		return super.findAll();
 	}
 
 	@Override
 	public Library findById(UUID id)
 	{
-		return repository.findById(id).orElseThrow(() -> new NotFoundException(NOT_FOUND));
+		return super.findById(id);
 	}
 
 	@Override
 	public Library persist(Library libraryPayload)
 	{
-		Library library = new Library();
-
-		BeanUtils.copyProperties(libraryPayload, library);
-
-		return repository.save(library);
+		return super.persist(libraryPayload);
 	}
 
 	@Override
 	public Library update(UUID id, Library library)
 	{
-		Library savedLibrary = repository.findById(id).orElseThrow(() -> new NotFoundException(NOT_FOUND));
-
-		BeanUtils.copyProperties(library, savedLibrary, "id", "address");
-
-		return repository.save(savedLibrary);
+		return super.update(id, library);
 	}
 
 	@Override
 	public void delete(UUID id) throws NotFoundException
 	{
-		Library library = repository.findById(id).orElseThrow(() -> new NotFoundException(NOT_FOUND));
-
-		repository.delete(library);
+		super.delete(id);
 	}
 }

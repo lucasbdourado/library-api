@@ -65,6 +65,19 @@ public class Book
 
 	private GregorianCalendar updateDate;
 
+	@PrePersist
+	public void updateCreationDateAndUpdateDate()
+	{
+		this.setCreationDate(new GregorianCalendar());
+		this.setUpdateDate(new GregorianCalendar());
+	}
+
+	@PreUpdate
+	public void updateUpdateDate()
+	{
+		this.setUpdateDate(new GregorianCalendar());
+	}
+
 	public UUID getId()
 	{
 		return id;

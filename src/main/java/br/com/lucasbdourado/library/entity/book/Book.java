@@ -3,7 +3,6 @@ package br.com.lucasbdourado.library.entity.book;
 import br.com.lucasbdourado.library.entity.author.Author;
 import br.com.lucasbdourado.library.entity.bookgender.BookGender;
 import br.com.lucasbdourado.library.entity.booklanguage.BookLanguage;
-import br.com.lucasbdourado.library.entity.neighborhood.Neighborhood;
 import br.com.lucasbdourado.library.entity.publisher.Publisher;
 import br.com.lucasbdourado.library.entity.rating.Rating;
 import com.fasterxml.jackson.annotation.JsonIgnore;

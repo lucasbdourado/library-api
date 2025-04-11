@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Operações", description = "Operações relacionadas às operações de grupos")
 public class OperationREST
 {
-
 	private static final String NOT_FOUND = "Not Found";
 
 	private final IOperationService service;

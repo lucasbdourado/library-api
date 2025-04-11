@@ -3,11 +3,13 @@ package br.com.lucasbdourado.library.mapper.book;
 import br.com.lucasbdourado.library.dto.author.AuthorResponse;
 import br.com.lucasbdourado.library.dto.book.BookResponse;
 import br.com.lucasbdourado.library.dto.bookgender.BookGenderResponse;
+import br.com.lucasbdourado.library.dto.booklanguage.BookLanguageResponse;
 import br.com.lucasbdourado.library.dto.publisher.PublisherResponse;
 import br.com.lucasbdourado.library.dto.rating.RatingResponse;
 import br.com.lucasbdourado.library.entity.book.Book;
 import br.com.lucasbdourado.library.mapper.author.AuthorMapper;
 import br.com.lucasbdourado.library.mapper.bookgender.BookGenderMapper;
+import br.com.lucasbdourado.library.mapper.booklanguage.BookLanguageMapper;
 import br.com.lucasbdourado.library.mapper.publisher.PublisherMapper;
 import br.com.lucasbdourado.library.mapper.rating.RatingMapper;
 import java.util.List;
@@ -27,9 +29,11 @@ public class BookMapper
 
 		BookGenderResponse bookGenderResponse = BookGenderMapper.toResponse(book.getGender());
 
+		BookLanguageResponse bookLanguageResponse = BookLanguageMapper.toResponse(book.getLanguage());
+
 		return new BookResponse(book.getId(), book.getName(), book.getCode(), book.getIsbn(),
-			book.getPublishDate(), book.getEdition(), bookGenderResponse, publisherResponse, book.getQuantity(),
-			authorResponseList, ratingResponseList, book.getPages(), book.getCollection(),
-			book.getDescription(), book.getSeries());
+			book.getPublishDate(), book.getEdition(), bookGenderResponse, publisherResponse,
+			book.getQuantity(), authorResponseList, ratingResponseList, bookLanguageResponse,
+			book.getPages(), book.getCollection(), book.getDescription(), book.getSeries());
 	}
 }

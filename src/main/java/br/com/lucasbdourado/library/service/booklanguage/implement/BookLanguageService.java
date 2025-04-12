@@ -1,8 +1,6 @@
 package br.com.lucasbdourado.library.service.booklanguage.implement;
 
-import br.com.lucasbdourado.library.entity.bookgender.BookGender;
 import br.com.lucasbdourado.library.entity.booklanguage.BookLanguage;
-import br.com.lucasbdourado.library.repository.bookgender.BookGenderRepository;
 import br.com.lucasbdourado.library.repository.booklanguage.BookLanguageRepository;
 import br.com.lucasbdourado.library.service.booklanguage.IBookLanguageService;
 import br.com.lucasbdourado.library.service.generic.implement.GenericBaseService;

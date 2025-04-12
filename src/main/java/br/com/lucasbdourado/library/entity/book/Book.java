@@ -1,11 +1,11 @@
 package br.com.lucasbdourado.library.entity.book;
 
 import br.com.lucasbdourado.library.entity.author.Author;
+import br.com.lucasbdourado.library.entity.bookexample.BookExample;
 import br.com.lucasbdourado.library.entity.bookgender.BookGender;
 import br.com.lucasbdourado.library.entity.booklanguage.BookLanguage;
 import br.com.lucasbdourado.library.entity.publisher.Publisher;
 import br.com.lucasbdourado.library.entity.rating.Rating;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -38,7 +38,6 @@ public class Book
 	private int quantity;
 
 	@ManyToMany(mappedBy = "bookList")
-	@JsonIgnore
 	private List<Author> authorList;
 
 	@OneToMany(mappedBy = "rating", cascade = CascadeType.ALL)
@@ -46,6 +45,9 @@ public class Book
 
 	@ManyToOne
 	private BookLanguage language;
+
+	@OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+	private List<BookExample> bookExampleList = new ArrayList<>();
 
 	//private PaymentMethod paymentMethod;
 
@@ -195,6 +197,16 @@ public class Book
 	public void setLanguage(BookLanguage language)
 	{
 		this.language = language;
+	}
+
+	public List<BookExample> getBookExampleList()
+	{
+		return bookExampleList;
+	}
+
+	public void setBookExampleList(List<BookExample> bookExampleList)
+	{
+		this.bookExampleList = bookExampleList;
 	}
 
 	public short getPages()

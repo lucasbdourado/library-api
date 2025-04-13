@@ -3,11 +3,15 @@ package br.com.lucasbdourado.library.entity.customer;
 import br.com.lucasbdourado.library.entity.address.Address;
 import br.com.lucasbdourado.library.entity.group.Group;
 import br.com.lucasbdourado.library.entity.library.Library;
+import br.com.lucasbdourado.library.entity.loan.Loan;
+import br.com.lucasbdourado.library.entity.reservation.Reservation;
 import br.com.lucasbdourado.library.entity.user.User;
 import jakarta.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -43,6 +47,12 @@ public class Customer implements Serializable
 	@OneToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User user;
+
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Reservation> reservationList = new ArrayList<>();
+
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Loan> loanList;
 
 	private GregorianCalendar creationDate;
 
@@ -157,6 +167,26 @@ public class Customer implements Serializable
 	public void setUser(User user)
 	{
 		this.user = user;
+	}
+
+	public List<Reservation> getReservationList()
+	{
+		return reservationList;
+	}
+
+	public void setReservationList(List<Reservation> reservationList)
+	{
+		this.reservationList = reservationList;
+	}
+
+	public List<Loan> getLoanList()
+	{
+		return loanList;
+	}
+
+	public void setLoanList(List<Loan> loanList)
+	{
+		this.loanList = loanList;
 	}
 
 	public GregorianCalendar getCreationDate()

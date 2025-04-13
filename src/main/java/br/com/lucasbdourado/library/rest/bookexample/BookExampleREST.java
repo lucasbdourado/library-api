@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/book-example")
+@RequestMapping("/book-examples")
 @Tag(name = "Explemplos de Livros", description = "Todas as exemplos de livros relacionadas a exemplos de livros")
 public class BookExampleREST
 {
